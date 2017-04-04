@@ -10,12 +10,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-
 <div class="container">
 <h1 class="page-title">Page Title</h1>
 <p>It's possible to disable the key for the character, but I myself had problems with the form not re-enabling. I couldn't edit the field any further after typing the character. So I changed the script to look for the character and once present make the field have a maxlength property, that way you can still delete the character and add others instead. It solves a problem where people put address info into a field that includes like "Apt#" - and I can use the "#" character.</p>
-
 	<div class="col-lg-6">
 		<form>
 			<ul class="list-group">
@@ -36,9 +33,7 @@
 		</form>
 	</div>
 </div>
-
 <script>
-
 function checkForCharacter(id, character) {
 
 	var cfp = $('#' + id);
@@ -68,13 +63,11 @@ function checkForCharacter(id, character) {
 	});
 
 }
-
 $(document).ready(function(){
 
 	checkForCharacter('number', '#');
 
 });
-
 </script>
 </body>
 </html>
