@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+<title>Check for character</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+
+<div class="container">
+<h1 class="page-title">Page Title</h1>
+<p>It's possible to disable the key for the character, but I myself had problems with the form not re-enabling. I couldn't edit the field any further after typing the character. So I changed the script to look for the character and once present make the field have a maxlength property, that way you can still delete the character and add others instead. It solves a problem where people put address info into a field that includes like "Apt#" - and I can use the "#" character.</p>
+
+	<div class="col-lg-6">
+		<form>
+			<ul class="list-group">
+				<li class="list-group-item">
+					<div class="row">
+						<div class="form-group">
+							<label for="number" class="col-lg-3 control-label">Number</label>
+							<div class="col-lg-9">
+								<input type="text" name="number" id="number" placeholder="number" class="form-control" />
+							</div>
+						</div>
+					</div>
+				</li>
+				<li class="list-group-item">
+					<input class="btn btn-primary" type="submit" value="post" class="btn-submit">
+				</li>
+			</ul>
+		</form>
+	</div>
+</div>
+
+<script>
+
+function checkForCharacter(id, character) {
+
+	var cfp = $('#' + id);
+	
+	cfp.bind('keyup', function(e){	
+		var targetText = cfp.val();
+		if ( targetText.indexOf(character) > -1 ){
+			var lengthOriginal = targetText.length;
+			var numOfChar = targetText.split(character)[0];
+			var NumericalChar = numOfChar.length;
+			if(lengthOriginal > NumericalChar) { 
+				cfp.css('background-color','pink');
+				cfp.attr('maxlength', lengthOriginal);
+				$('input[type=submit]').attr('disabled','disabled');
+			} else {
+				console.log('inactive');
+			}
+			if(!$('span#keypressWarningMessage').length) {
+				cfp.after('<span id="keypressWarningMessage">The "'+ character +'" character is not allowed.</span>');	
+			}
+		} else {
+			$('span#keypressWarningMessage').remove();
+			cfp.css('background-color','#fff');
+			cfp.removeAttr('maxlength');
+			$('input[type=submit]').removeAttr('disabled');
+		}
+	});
+
+}
+
+$(document).ready(function(){
+
+	checkForCharacter('number', '#');
+
+});
+
+</script>
+</body>
+</html>
